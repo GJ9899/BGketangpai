@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
+	
 
 	/**
 	 * 学生注册
@@ -55,6 +56,7 @@ public class StudentController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JSONResult login(@RequestBody LoginInfo loginInfo) {
 		JSONResult jsonResult = new JSONResult();
+		
 		Student student = studentService.login(loginInfo);
 		if (student != null) {
 			jsonResult.setMessage("success");

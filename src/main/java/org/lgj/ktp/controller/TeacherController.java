@@ -35,6 +35,7 @@ public class TeacherController {
 	@ApiOperation(value = "注册",notes = "注册")
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	public JSONResult regisster(@RequestBody Teacher teacher) {
+		System.out.println("121212");
 		JSONResult jsonResult = new JSONResult();
 		teacher.setId(UUID.randomUUID().toString().replace("-", ""));
 		boolean success = teacherService.register(teacher);
