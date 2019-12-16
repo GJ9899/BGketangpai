@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lgj.ktp.dao.HomeworkMapper">
+  <resultMap id="BaseResultMap" type="org.lgj.ktp.entity.Homework">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+    <result column="homework_name" jdbcType="VARCHAR" property="homeworkName" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="end_date" jdbcType="VARCHAR" property="endDate" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="forbid_submit" jdbcType="VARCHAR" property="forbidSubmit" />
+    <result column="best_score" jdbcType="INTEGER" property="bestScore" />
+    <result column="need_check" jdbcType="VARCHAR" property="needCheck" />
+    <result column="check_alert_value" jdbcType="INTEGER" property="checkAlertValue" />
+    <result column="dumplicate_check_rate" jdbcType="INTEGER" property="dumplicateCheckRate" />
+    <result column="publish_course_object" jdbcType="VARCHAR" property="publishCourseObject" />
+    <result column="publish_time" jdbcType="VARCHAR" property="publishTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, teacher_id, homework_name, introduce, end_date, end_time, forbid_submit, best_score, 
+    need_check, check_alert_value, dumplicate_check_rate, publish_course_object, publish_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from homework
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from homework
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 添加课程 -->
+  <insert id="addHomework" parameterType="org.lgj.ktp.entity.Homework">
+    insert into homework (id, teacher_id, homework_name, 
+      introduce, end_date, end_time, 
+      forbid_submit, best_score, need_check, 
+      check_alert_value, dumplicate_check_rate, publish_course_object, 
+      publish_time)
+    values (#{id,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{homeworkName,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{forbidSubmit,jdbcType=VARCHAR}, #{bestScore,jdbcType=INTEGER}, #{needCheck,jdbcType=VARCHAR}, 
+      #{checkAlertValue,jdbcType=INTEGER}, #{dumplicateCheckRate,jdbcType=INTEGER}, #{publishCourseObject,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lgj.ktp.entity.Homework">
+    insert into homework
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="homeworkName != null">
+        homework_name,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="endDate != null">
+        endDate,
+      </if>
+      <if test="endTtime != null">
+        endTime,
+      </if>
+      <if test="forbidSubmit != null">
+        forbid_submit,
+      </if>
+      <if test="bestScore != null">
+        best_score,
+      </if>
+      <if test="needCheck != null">
+        need_check,
+      </if>
+      <if test="checkAlertValue != null">
+        check_alert_value,
+      </if>
+      <if test="dumplicateCheckRate != null">
+        dumplicate_check_rate,
+      </if>
+      <if test="publishCourseObject != null">
+        publish_course_object,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkName != null">
+        #{homeworkName,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="endDdate != null">
+        #{endDdate,jdbcType=VARCHAR},
+      </if>
+      <if test="endTtime != null">
+        #{endTtime,jdbcType=VARCHAR},
+      </if>
+      <if test="forbidSubmit != null">
+        #{forbidSubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="bestScore != null">
+        #{bestScore,jdbcType=INTEGER},
+      </if>
+      <if test="needCheck != null">
+        #{needCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAlertValue != null">
+        #{checkAlertValue,jdbcType=INTEGER},
+      </if>
+      <if test="dumplicateCheckRate != null">
+        #{dumplicateCheckRate,jdbcType=INTEGER},
+      </if>
+      <if test="publishCourseObject != null">
+        #{publishCourseObject,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lgj.ktp.entity.Homework">
+    update homework
+    <set>
+      <if test="teacherId != null">
+        teacher_id = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkName != null">
+        homework_name = #{homeworkName,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="endDdate != null">
+        endDate = #{endDdate,jdbcType=VARCHAR},
+      </if>
+      <if test="endTtime != null">
+        endTime = #{endTtime,jdbcType=VARCHAR},
+      </if>
+      <if test="forbidSubmit != null">
+        forbid_submit = #{forbidSubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="bestScore != null">
+        best_score = #{bestScore,jdbcType=INTEGER},
+      </if>
+      <if test="needCheck != null">
+        need_check = #{needCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAlertValue != null">
+        check_alert_value = #{checkAlertValue,jdbcType=INTEGER},
+      </if>
+      <if test="dumplicateCheckRate != null">
+        dumplicate_check_rate = #{dumplicateCheckRate,jdbcType=INTEGER},
+      </if>
+      <if test="publishCourseObject != null">
+        publish_course_object = #{publishCourseObject,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lgj.ktp.entity.Homework">
+    update homework
+    set teacher_id = #{teacherId,jdbcType=VARCHAR},
+      homework_name = #{homeworkName,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      endDate = #{endDdate,jdbcType=VARCHAR},
+      endTime = #{endTtime,jdbcType=VARCHAR},
+      forbid_submit = #{forbidSubmit,jdbcType=VARCHAR},
+      best_score = #{bestScore,jdbcType=INTEGER},
+      need_check = #{needCheck,jdbcType=VARCHAR},
+      check_alert_value = #{checkAlertValue,jdbcType=INTEGER},
+      dumplicate_check_rate = #{dumplicateCheckRate,jdbcType=INTEGER},
+      publish_course_object = #{publishCourseObject,jdbcType=VARCHAR},
+      publish_time = #{publishTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

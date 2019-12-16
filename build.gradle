@@ -36,4 +36,8 @@ dependencies {
     compile group: 'com.github.pagehelper', name: 'pagehelper', version: '4.1.0'
     
     //implementation 'org.springframework.boot:spring-boot-starter-security' 
+    
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 }

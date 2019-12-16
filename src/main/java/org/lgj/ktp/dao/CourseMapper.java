@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.lgj.ktp.dto.EditCourseDTO;
 import org.lgj.ktp.entity.Course;
 
 @Mapper
@@ -27,8 +28,11 @@ public interface CourseMapper {
     Course getCourseById(String id);
     
     //显示所有课程
-    List<Course> showCourse();
+    List<Course> showCourse(@Param("id")String id);
     
     
     List<Course>getCourseInfo(@Param("selecterId")String selecterId);
+    
+    //编辑课程
+    int editCourse(EditCourseDTO editCourseDTO);
 }

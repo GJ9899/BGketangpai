@@ -30,6 +30,7 @@
     select 
     <include refid="Base_Column_List" />
     from course
+    where creater_id = #{id,jdbcType=VARCHAR}
   </select>
   
   <!-- 获取已选全部课程 -->
@@ -119,6 +120,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="org.lgj.ktp.entity.Course">
     update course
     <set>
@@ -149,6 +151,18 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <!-- 编辑课程 -->
+  <update id="editCourse" parameterType="org.lgj.ktp.dto.EditCourseDTO">
+    update course
+    set course_name = #{courseName,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      semester = #{semester,jdbcType=VARCHAR},
+      conditions = #{conditions,jdbcType=VARCHAR}
+    where id = #{courseId,jdbcType=VARCHAR}
+  </update>
+  
   <update id="updateByPrimaryKey" parameterType="org.lgj.ktp.entity.Course">
     update course
     set course_name = #{courseName,jdbcType=VARCHAR},

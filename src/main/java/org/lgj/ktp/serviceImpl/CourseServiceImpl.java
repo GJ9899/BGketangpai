@@ -3,6 +3,7 @@ package org.lgj.ktp.serviceImpl;
 import java.util.List;
 
 import org.lgj.ktp.dao.CourseMapper;
+import org.lgj.ktp.dto.EditCourseDTO;
 import org.lgj.ktp.entity.Course;
 import org.lgj.ktp.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,13 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public List<Course> showCourse() {
-		return courseMapper.showCourse();
+	public List<Course> showCourse(String id) {
+		return courseMapper.showCourse(id);
+	}
+
+	@Override
+	public boolean editCourse(EditCourseDTO editCourseDTO) {
+		return courseMapper.editCourse(editCourseDTO) > 0;
 	}
 
 }

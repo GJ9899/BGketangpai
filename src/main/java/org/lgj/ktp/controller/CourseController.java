@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.apache.ibatis.annotations.Param;
 import org.lgj.ktp.config.RandomStringUtil;
 import org.lgj.ktp.dto.AddCourseDTO;
+import org.lgj.ktp.dto.DeleteCourseDTO;
+import org.lgj.ktp.dto.EditCourseDTO;
 import org.lgj.ktp.entity.Course;
 import org.lgj.ktp.service.CourseService;
 import org.lgj.ktp.util.JSONResult;
@@ -66,12 +68,15 @@ public class CourseController {
 		return jsonResult;
 	}
 	
-	
+	/**
+	 * 展示所有课程
+	 * @return
+	 */
 	@RequestMapping(value = "/showCourse",method = RequestMethod.GET)
 	@ApiOperation(value = "展示所有课程",notes = "展示所有课程")
-	public JSONResult showCourse() {
+	public JSONResult showCourse(@RequestParam("id")String id) {
 		JSONResult jsonResult = new JSONResult<>();
-		List<Course> courseList = courseService.showCourse();
+		List<Course> courseList = courseService.showCourse(id);
 		jsonResult.setData(courseList);
 		jsonResult.setTotalCount(courseList.size());
 		return jsonResult;
@@ -88,6 +93,37 @@ public class CourseController {
 		System.out.println("id=" + id);
 		Course course = courseService.getCourseById(id);
 		return course;
+	}
+	
+	/**
+	 * 删除课程
+	 * @param deleteCourseDTO
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteCourse",method = RequestMethod.POST)
+	@ApiOperation(value = "退课",notes = "退课")
+	public JSONResult deleteCourse(@RequestBody DeleteCourseDTO deleteCourseDTO) {
+		JSONResult jsonResult = new JSONResult<>();
+		//1.判断这门课程是 “学” 还是 “教”
+		//2."学"：删除选课表里面这条信息
+		//3.“教”：删除选课表里面的选课，删除这门课程
+		//4.删除这门课的作业
+		return jsonResult;
+	}
+	
+	
+	@RequestMapping(value = "/editCourse",method=RequestMethod.POST)
+	@ApiOperation(value = "编辑课程",notes = "编辑课程")
+	public JSONResult editCourse(@RequestBody EditCourseDTO editCourseDTO) {
+		JSONResult jsonResult = new JSONResult<>();
+		boolean success = courseService.editCourse(editCourseDTO);
+		if(success) {
+			jsonResult.setMessage("success");
+		}
+		else {
+			jsonResult.setMessage("false");
+		}
+		return jsonResult;
 	}
 	
 }
