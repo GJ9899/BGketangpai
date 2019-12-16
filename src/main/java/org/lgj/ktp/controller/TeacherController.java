@@ -55,11 +55,12 @@ public class TeacherController {
 	 */
 	@ApiOperation(value = "登录",notes = "登录")
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
-	public JSONResult login(@RequestBody LoginInfo loginInfo) {
+	public JSONResult login(@RequestBody LoginInfo loginInfo,HttpSession session) {
 		JSONResult jsonResult = new JSONResult();
 		Teacher teacher = teacherService.login(loginInfo);
 		if(teacher != null) {
 			jsonResult.setMessage("success");
+			session.setAttribute("user", teacher);
 			jsonResult.setData(teacher);
 		}
 		else {

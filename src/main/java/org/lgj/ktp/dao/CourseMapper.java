@@ -3,6 +3,7 @@ package org.lgj.ktp.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.lgj.ktp.entity.Course;
 
 @Mapper
@@ -27,4 +28,7 @@ public interface CourseMapper {
     
     //显示所有课程
     List<Course> showCourse();
+    
+    
+    List<Course>getCourseInfo(@Param("selecterId")String selecterId);
 }
