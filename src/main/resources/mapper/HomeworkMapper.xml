@@ -20,12 +20,49 @@
     id, teacher_id, homework_name, introduce, end_date, end_time, forbid_submit, best_score, 
     need_check, check_alert_value, dumplicate_check_rate, publish_course_object, publish_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  
+  <!-- 获取作业信息 -->
+  <select id="getHomeworkById" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkInfoDTO">
     select 
-    <include refid="Base_Column_List" />
+    homework_name,introduce,end_date,end_time,publish_time
     from homework
-    where id = #{id,jdbcType=VARCHAR}
+    where publish_course_object = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <!-- 获取教授作业题目 -->
+  <select id="getHomeworkName" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkNameDTO">
+	  select id,homework_name,publish_course_object as courseId,publish_time 
+           from homework 
+           where publish_time in 
+                (select max(publish_time) 
+                    from homework 
+                    where teacher_id = #{userId,jdbcType=VARCHAR}
+                group by publish_course_object)
+  </select>
+  
+    <!-- 获取学习课程题目 -->
+  <select id="getHomeworkName1" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkNameDTO">
+    select homework.id,homework_name,publish_course_object as courseId ,max(publish_time)
+		from homework 
+		where publish_course_object in 
+		  (select course_id from selection_course where selecter_id = #{userId,jdbcType=VARCHAR})
+		GROUP BY publish_course_object
+  </select>
+  
+  <!-- 学生获取作业题目 -->
+  <select id="getStuHomeworkName" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkNameDTO">
+    select publish_course_object as courseId,homework_name 
+    from homework
+    left join selection_course 
+        on selection_course.course_id = homework.publish_course_object 
+            where publish_time in 
+                (select max(publish_time) 
+                    from homework 
+                    where selection_course.selecter_id = #{studentId,jdbcType=VARCHAR} 
+                    group by publish_course_object)
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from homework
     where id = #{id,jdbcType=VARCHAR}
