@@ -19,4 +19,7 @@ public interface CourseService {
 	
 	// 编辑课程
 	boolean editCourse(EditCourseDTO editCourseDTO);
+	
+	//获取所有课程
+	List<Course> getAllCourse(String teacherId);
 }

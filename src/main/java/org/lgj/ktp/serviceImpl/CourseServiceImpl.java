@@ -34,4 +34,9 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.editCourse(editCourseDTO) > 0;
 	}
 
+	@Override
+	public List<Course> getAllCourse(String teacherId) {
+		return courseMapper.getAllCourse(teacherId);
+	}
+
 }

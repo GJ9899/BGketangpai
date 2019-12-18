@@ -43,6 +43,19 @@
             )
   </select>
   
+  
+  <!-- 获取教师教授的课程和选学的课程 -->
+  <select id="getAllCourse" parameterType="java.lang.String" resultMap="BaseResultMap"> 
+    select 
+    *
+    from course
+    where creater_id = #{teacherId,jdbcType=VARCHAR} or id in (select course_id
+            from selection_course 
+            where selecter_id = #{teacherId,jdbcType=VARCHAR}
+            )
+  </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from course
     where id = #{id,jdbcType=VARCHAR}

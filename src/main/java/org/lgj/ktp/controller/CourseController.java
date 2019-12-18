@@ -83,14 +83,13 @@ public class CourseController {
 	}
 	
 	/**
-	 * 根据id
+	 * 根据id获取课程
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "/getCourseById",method = RequestMethod.GET)
 	@ApiOperation(value = "根据id获取课程",notes = "根据id获取课程")
 	public Course getCourseById(@RequestParam("id") String id) {
-		System.out.println("id=" + id);
 		Course course = courseService.getCourseById(id);
 		return course;
 	}
@@ -111,7 +110,11 @@ public class CourseController {
 		return jsonResult;
 	}
 	
-	
+	/**
+	 * 编辑课程
+	 * @param editCourseDTO
+	 * @return
+	 */
 	@RequestMapping(value = "/editCourse",method=RequestMethod.POST)
 	@ApiOperation(value = "编辑课程",notes = "编辑课程")
 	public JSONResult editCourse(@RequestBody EditCourseDTO editCourseDTO) {
@@ -126,4 +129,17 @@ public class CourseController {
 		return jsonResult;
 	}
 	
+	/**
+	 * 获取教师教授的课程、选择的课程
+	 * @param teacherId
+	 * @return
+	 */
+	@RequestMapping(value = "/getAllCourse",method = RequestMethod.GET)
+	@ApiOperation(value = "获取教师教授的课程、选择的课程",notes = "获取教师教授的课程、选择的课程")
+	public JSONResult getAllCourse(@RequestParam("teacherId")String teacherId) {
+		JSONResult jsonResult = new JSONResult<>();
+		List<Course> courseLsList = courseService.getAllCourse(teacherId);
+		jsonResult.setData(courseLsList);
+		return jsonResult;
+	}
 }
