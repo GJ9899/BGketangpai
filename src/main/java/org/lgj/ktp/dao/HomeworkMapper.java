@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.lgj.ktp.dto.HomeworkInfoDTO;
 import org.lgj.ktp.dto.HomeworkNameDTO;
+import org.lgj.ktp.dto.HomeworkSubInfo;
 import org.lgj.ktp.entity.Homework;
 
 @Mapper
@@ -36,4 +37,7 @@ public interface HomeworkMapper {
     
   //学生获取作业题目
     List<HomeworkNameDTO> getStuHomeworkName(@Param("studentId")String studentId);
+    
+    //获取提交作业页面所需作业信息
+    HomeworkSubInfo getSubHomeworkbyId(@Param("homeworkId")String homeworkId);
 }

@@ -1,7 +1,10 @@
 package org.lgj.ktp.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.lgj.ktp.dto.StudentListDTO;
 import org.lgj.ktp.entity.Student;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +28,7 @@ public interface StudentMapper {
     
     //登录
     Student login(@Param("phoneMail")String phoneMail,@Param("password")String password);
+    
+    //获取学生列表
+    List<StudentListDTO> getStudentList(@Param("courseId")String courseId);
 }

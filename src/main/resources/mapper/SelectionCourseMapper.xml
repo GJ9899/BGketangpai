@@ -23,8 +23,12 @@
     where add_code = #{addCode,jdbcType=VARCHAR}
   </select>
   
-
-  
+  <!-- 获取同学数量 -->
+  <select id="getClassmateCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from selection_course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
   
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

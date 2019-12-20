@@ -21,6 +21,22 @@
     where phone_mail = #{phoneMail,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
   
+  <!-- 获取教师信息 -->
+  <select id="getTeacherInfo" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.TeacherInfoDTO">
+    select 
+    teacher.id,teacher.name,teacher.phone_mail
+    from teacher left join course on course.creater_id = teacher.id
+    where course.id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 获取学生信息 -->
+  <select id="getStudentList" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.StudentListDTO">
+    select 
+       teacher.id,name,phone_mail
+    from teacher left join selection_course on teacher.id = selection_course.selecter_id
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 注册 -->
   <insert id="register" parameterType="org.lgj.ktp.entity.Teacher">
     insert into teacher (id, phone_mail, password, school,

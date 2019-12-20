@@ -1,6 +1,8 @@
 package org.lgj.ktp.dto;
 
 public class HomeworkInfoDTO {
+	private String id;
+	
 	private String publishTime;
 	
 	private String homeworkName;
@@ -10,6 +12,16 @@ public class HomeworkInfoDTO {
 	private String endDate;
 	
 	private String endTime;
+
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getPublishTime() {
 		return publishTime;

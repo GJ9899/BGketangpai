@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.lgj.ktp.dto.LoginInfo;
+import org.lgj.ktp.dto.TeacherInfoDTO;
 import org.lgj.ktp.entity.Teacher;
 import org.lgj.ktp.service.TeacherService;
 import org.lgj.ktp.util.JSONResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -69,4 +71,15 @@ public class TeacherController {
 		return jsonResult;
 	}
 	
+	/**
+	 * 获取教师信息
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping(value = "/getTeacherInfo",method = RequestMethod.GET)
+	@ApiOperation(value = "获取教师信息",notes = "获取教师信息")
+	public TeacherInfoDTO getTeacherInfo(@RequestParam("courseId")String courseId) {
+		TeacherInfoDTO teacherInfoDTO =  teacherService.getTeacherInfo(courseId);
+		return teacherInfoDTO;
+	}
 }

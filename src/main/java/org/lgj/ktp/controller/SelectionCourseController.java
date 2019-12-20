@@ -3,6 +3,7 @@ package org.lgj.ktp.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.lgj.ktp.dao.SelectionCourseMapper;
 import org.lgj.ktp.dto.SelectionCourseDTO;
 import org.lgj.ktp.entity.Course;
 import org.lgj.ktp.entity.SelectionCourse;
@@ -86,4 +87,15 @@ public class SelectionCourseController {
 		return jsonResult;
 	}
 	 
+	/**
+	 * 获取同学数量
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping(value = "/getClassmateCount",method = RequestMethod.GET)
+	@ApiOperation(value = "获取同学数量",notes = "获取同学数量")
+	public Integer getClassmateCount(@RequestParam("courseId")String courseId) {
+		Integer count = selectionCourseService.getClassmateCount(courseId);
+		return count;
+	}
 }

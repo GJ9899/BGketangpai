@@ -17,4 +17,7 @@ public interface SelectionCourseService {
 	
 	//根据课程id获取课程信息
 	List<Course> getCourseInfo(String id);
+	
+	//获取同学数量
+	Integer getClassmateCount(String courseId);
 }

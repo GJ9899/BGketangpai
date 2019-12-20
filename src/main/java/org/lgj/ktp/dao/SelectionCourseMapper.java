@@ -28,4 +28,6 @@ public interface SelectionCourseMapper {
     List<String> getAllCourseId(@Param("selecterId")String selecterId);
     
     List<Course> getCourseInfo(@Param("selecterId")String selecterId);
+    
+    Integer getClassmateCount(@Param("courseId")String courseId);
 }

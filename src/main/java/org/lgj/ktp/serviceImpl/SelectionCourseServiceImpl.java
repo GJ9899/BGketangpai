@@ -36,8 +36,12 @@ public class SelectionCourseServiceImpl implements SelectionCourseService{
 
 	@Override
 	public List<Course> getCourseInfo(String id) {
-		System.out.println("id=" + id);
 		return courseMapper.getCourseInfo(id);
+	}
+
+	@Override
+	public Integer getClassmateCount(String courseId) {
+		return selectionCourseMapper.getClassmateCount(courseId);
 	}
 
 }

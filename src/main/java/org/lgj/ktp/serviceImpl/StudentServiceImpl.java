@@ -1,7 +1,10 @@
 package org.lgj.ktp.serviceImpl;
 
+import java.util.List;
+
 import org.lgj.ktp.dao.StudentMapper;
 import org.lgj.ktp.dto.LoginInfo;
+import org.lgj.ktp.dto.StudentListDTO;
 import org.lgj.ktp.entity.Student;
 import org.lgj.ktp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +25,10 @@ public class StudentServiceImpl implements StudentService{
 		Student student = studentMapper.login(loginInfo.getPhoneMail(),loginInfo.getPassword());
 		return student;
 	}
+
+	@Override
+	public List<StudentListDTO> getStudentList(String courseId) {
+		return studentMapper.getStudentList(courseId);
+	}
+
 }

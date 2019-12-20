@@ -5,6 +5,7 @@ import java.util.List;
 import org.lgj.ktp.dao.HomeworkMapper;
 import org.lgj.ktp.dto.HomeworkInfoDTO;
 import org.lgj.ktp.dto.HomeworkNameDTO;
+import org.lgj.ktp.dto.HomeworkSubInfo;
 import org.lgj.ktp.entity.Homework;
 import org.lgj.ktp.service.HomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class HomeWorkServiceImpl implements HomeworkService{
 	@Override
 	public List<HomeworkNameDTO> getStuHomeworkName(String studentId) {
 		return homeworkMapper.getStuHomeworkName(studentId);
+	}
+
+	@Override
+	public HomeworkSubInfo getSubHomeworkbyId(String homeworkId) {
+		return homeworkMapper.getSubHomeworkbyId(homeworkId);
 	}
 
 }

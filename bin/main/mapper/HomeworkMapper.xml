@@ -24,9 +24,18 @@
   <!-- 获取作业信息 -->
   <select id="getHomeworkById" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkInfoDTO">
     select 
-    homework_name,introduce,end_date,end_time,publish_time
+    id,homework_name,introduce,end_date,end_time,publish_time
     from homework
     where publish_course_object = #{id,jdbcType=VARCHAR}
+    order by publish_time desc
+  </select>
+  
+  <!-- 获取提交作业页面所需作业信息 -->
+  <select id="getSubHomeworkbyId" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.HomeworkSubInfo">
+    select 
+    id,homework_name,introduce,end_date,end_time,need_check
+    from homework
+    where id = #{homeworkId,jdbcType=VARCHAR}
   </select>
   
   <!-- 获取教授作业题目 -->

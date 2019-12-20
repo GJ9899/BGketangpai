@@ -1,6 +1,9 @@
 package org.lgj.ktp.service;
 
+import java.util.List;
+
 import org.lgj.ktp.dto.LoginInfo;
+import org.lgj.ktp.dto.StudentListDTO;
 import org.lgj.ktp.entity.Student;
 import org.springframework.stereotype.Component;
 
@@ -11,4 +14,7 @@ public interface StudentService {
 		
 	//登录
 	Student login(LoginInfo loginInfo);
+	
+	//获取学生列表
+	List<StudentListDTO> getStudentList(String courseId);
 }

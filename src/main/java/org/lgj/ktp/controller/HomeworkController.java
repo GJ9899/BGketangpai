@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.lgj.ktp.dto.HomeworkInfoDTO;
 import org.lgj.ktp.dto.HomeworkNameDTO;
+import org.lgj.ktp.dto.HomeworkSubInfo;
 import org.lgj.ktp.entity.Homework;
 import org.lgj.ktp.service.HomeworkService;
 import org.lgj.ktp.util.JSONResult;
@@ -39,7 +40,6 @@ public class HomeworkController {
 	@ApiOperation(notes = "添加作业",value = "添加作业")
 	public JSONResult addHomework(@RequestBody Homework homework) {
 		JSONResult jsonResult = new JSONResult<>();
-		System.out.println(homework.getPublishCourseObject());
 		homework.setId(UUID.randomUUID().toString().replace("-", ""));
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -85,11 +85,28 @@ public class HomeworkController {
 		return homeworkInfoDTO;
 	}
 	
-	
+	/**
+	 * 学生获取作业题目
+	 * @param studentId
+	 * @return
+	 */
 	@RequestMapping(value = "/getStuHomeworkName",method = RequestMethod.GET)
 	@ApiOperation(value = "学生获取作业题目",notes = "学生获取作业题目")
 	public List<HomeworkNameDTO> getStuHomeworkName(@RequestParam("studentId")String studentId) {
 		List<HomeworkNameDTO> list = homeworkService.getStuHomeworkName(studentId);
 		return list;
+	}
+	
+	/**
+	 * 获取提交作业页面所需作业信息
+	 * @param homeworkId
+	 * @return
+	 */
+	@RequestMapping(value = "/getSubHomeworkbyId",method = RequestMethod.GET)
+	@ApiOperation(value = "获取提交作业页面所需作业信息",notes = "获取提交作业页面所需作业信息")
+	public HomeworkSubInfo getHomeworkbyId(@RequestParam("homeworkId")String homeworkId) {
+		System.out.println(homeworkId);
+		HomeworkSubInfo homeworkSubInfo = homeworkService.getSubHomeworkbyId(homeworkId);
+		return homeworkSubInfo;
 	}
 }
