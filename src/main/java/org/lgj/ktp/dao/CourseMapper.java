@@ -37,4 +37,10 @@ public interface CourseMapper {
     int editCourse(EditCourseDTO editCourseDTO);
     
     List<Course> getAllCourse(@Param("teacherId")String teacherId);
+    
+    //获取学生成员
+    List<String> getStuMember(@Param("courseId")String courseId);
+    
+  //获取教师成员
+    List<String> getTeaMember(@Param("courseId")String courseId);
 }

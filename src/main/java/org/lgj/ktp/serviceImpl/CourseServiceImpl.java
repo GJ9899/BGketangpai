@@ -39,4 +39,14 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.getAllCourse(teacherId);
 	}
 
+	@Override
+	public List<String> getStuMember(String courseId) {
+		return courseMapper.getStuMember(courseId);
+	}
+
+	@Override
+	public List<String> getTeaMember(String courseId) {
+		return courseMapper.getTeaMember(courseId);
+	}
+
 }

@@ -33,6 +33,22 @@
     where creater_id = #{id,jdbcType=VARCHAR}
   </select>
   
+  <!-- 获取学生成员 -->
+  <select id="getStuMember" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+        name
+    from student left join selection_course on student.id = selection_course.selecter_id
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 获取教师成员 -->
+  <select id="getTeaMember" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+        name
+    from teacher left join selection_course on teacher.id = selection_course.selecter_id
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 获取已选全部课程 -->
   <select id="getCourseInfo" parameterType="java.lang.String" resultMap="BaseResultMap"> 
     select *

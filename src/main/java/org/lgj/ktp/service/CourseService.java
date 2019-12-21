@@ -22,4 +22,10 @@ public interface CourseService {
 	
 	//获取所有课程
 	List<Course> getAllCourse(String teacherId);
+	
+	//获取学生成员
+	List<String> getStuMember(String courseId);
+	
+	//获取教师成员
+	List<String> getTeaMember(String courseId);
 }

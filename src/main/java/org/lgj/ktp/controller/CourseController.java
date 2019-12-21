@@ -142,4 +142,13 @@ public class CourseController {
 		jsonResult.setData(courseLsList);
 		return jsonResult;
 	}
+	
+	@RequestMapping(value = "/getCourseMember",method = RequestMethod.GET)
+	@ApiOperation(value = "获取课程成员",notes = "获取课程成员")
+	public List<String> getCourseMember(@RequestParam("courseId")String courseId){
+		List<String> stuMember = courseService.getStuMember(courseId);
+		List<String> teaMember = courseService.getTeaMember(courseId);
+		stuMember.addAll(teaMember);
+		return stuMember;
+	}
 }
