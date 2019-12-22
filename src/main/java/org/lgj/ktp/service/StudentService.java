@@ -17,4 +17,9 @@ public interface StudentService {
 	
 	//获取学生列表
 	List<StudentListDTO> getStudentList(String courseId);
+	
+	//获取学生姓名
+	List<String> getStudentName(String courseId);
+	
+	List<String> getTeacherName(String courseId);
 }

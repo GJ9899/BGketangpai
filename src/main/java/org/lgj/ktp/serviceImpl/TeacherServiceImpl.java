@@ -37,4 +37,9 @@ public class TeacherServiceImpl implements TeacherService{
 	public List<StudentListDTO> getStudentList(String courseId) {
 		return teacherMapper.getStudentList(courseId);
 	}
+
+	@Override
+	public List<String> getTeacherName(String studentId) {
+		return teacherMapper.getTeacherName(studentId);
+	}
 }

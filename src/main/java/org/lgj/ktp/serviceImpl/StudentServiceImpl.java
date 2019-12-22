@@ -31,4 +31,14 @@ public class StudentServiceImpl implements StudentService{
 		return studentMapper.getStudentList(courseId);
 	}
 
+	@Override
+	public List<String> getStudentName(String courseId) {
+		return studentMapper.getStudentName(courseId);
+	}
+
+	@Override
+	public List<String> getTeacherName(String courseId) {
+		return studentMapper.getTeacherName(courseId);
+	}
+
 }

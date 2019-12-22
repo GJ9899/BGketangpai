@@ -1,9 +1,11 @@
 package org.lgj.ktp.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.lgj.ktp.dto.LoginInfo;
 import org.lgj.ktp.dto.TeacherInfoDTO;
 import org.lgj.ktp.entity.Teacher;
@@ -81,5 +83,15 @@ public class TeacherController {
 	public TeacherInfoDTO getTeacherInfo(@RequestParam("courseId")String courseId) {
 		TeacherInfoDTO teacherInfoDTO =  teacherService.getTeacherInfo(courseId);
 		return teacherInfoDTO;
+	}
+	
+	/**
+	 * 获取教师名字
+	 */
+	@RequestMapping(value = "/getTeacherName",method = RequestMethod.GET)
+	@ApiOperation(value = "获取教师名字",notes = "获取教师名字")
+	public List<String> getTeacherName(@RequestParam("studentId")String studentId){
+		List<String> teacherName = teacherService.getTeacherName(studentId);
+		return teacherName;
 	}
 }

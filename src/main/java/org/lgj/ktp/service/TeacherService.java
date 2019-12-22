@@ -21,4 +21,7 @@ public interface TeacherService {
 	
 	//获取学生列表
 	List<StudentListDTO> getStudentList(String courseId);
+	
+	//获取教师姓名
+	List<String> getTeacherName(String studentId);
 }

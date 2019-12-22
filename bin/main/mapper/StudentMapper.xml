@@ -30,6 +30,21 @@
     where course_id = #{courseId,jdbcType=VARCHAR}
   </select>
   
+  <!-- 获取学生姓名 -->
+  <select id="getStudentName" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+       student.name
+    from student left join selection_course on student.id = selection_course.selecter_id
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getTeacherName" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+       teacher.name
+    from teacher left join selection_course on teacher.id = selection_course.selecter_id
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
   <!-- 注册 -->
   <insert id="register" parameterType="org.lgj.ktp.entity.Student">
     insert into student (id, phone_mail, password,school,

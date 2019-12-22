@@ -77,6 +77,11 @@ public class StudentController {
 		return jsonResult;
 	}
 	
+	/**
+	 * 获取学生列表
+	 * @param courseId
+	 * @return
+	 */
 	@RequestMapping(value = "/getStudentList",method = RequestMethod.GET)
 	@ApiOperation(value = "获取学生列表",notes = "获取学生列表")
 	public List<StudentListDTO> getStudentList(@RequestParam("courseId")String courseId){
@@ -85,4 +90,18 @@ public class StudentController {
 		list1.addAll(list2);
 		return list1;
 	}
+	/**
+	 * 获取学生姓名
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping(value = "/getStudentName",method = RequestMethod.GET)
+	@ApiOperation(value = "获取学生姓名",notes = "获取学生姓名")
+	public List<String> getStudentName(@RequestParam("courseId")String courseId){
+		List<String> stuName = studentService.getStudentName(courseId);
+		List<String> teacherName = studentService.getTeacherName(courseId);
+		stuName.addAll(teacherName);
+		return stuName;
+	}
+	
 }

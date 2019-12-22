@@ -34,4 +34,7 @@ public interface TeacherMapper {
     
     //获取学生列表
     List<StudentListDTO> getStudentList(@Param("courseId") String courseId);
+    
+    //获取教师姓名
+    List<String> getTeacherName(@Param("studentId")String studentId);
 }
