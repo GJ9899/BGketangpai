@@ -5,9 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
+import org.lgj.ktp.dto.AddScoreDTO;
+import org.lgj.ktp.dto.GetFileDTO;
+import org.lgj.ktp.dto.GetSubmitInfo;
 import org.lgj.ktp.dto.SubmitHomeworkDTO;
+import org.lgj.ktp.dto.SubmittedDTO;
 import org.lgj.ktp.service.GradeService;
 import org.lgj.ktp.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,37 +41,39 @@ public class GradeController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/uploadFile")
-	public JSONResult addFile(@RequestParam(name = "file_data", required = false) MultipartFile file) {
-		JSONResult jsonResult = new JSONResult<>();
-	       //文件上传
-	       String fileName = file.getOriginalFilename();
-	       String newCompanyFilePath = "";
-	       if (!file.isEmpty()) {
-	           try {
-	        	   newCompanyFilePath = "D:\\Program Files (x86)\\eclipse-workspace\\BGketangpai\\src\\main\\resources\\homework\\"+ fileName;
+	public String addImage(@RequestParam(name = "file_data", required = false) MultipartFile file) {
+        //文件上传
+        String originalName = file.getOriginalFilename();
+        String newCompanyImagePath = "";
+        if (!file.isEmpty()) {
+            try {
+                newCompanyImagePath = "D:\\Program Files (x86)\\eclipse-workspace\\BGketangpai\\src\\main\\resources\\static\\"+ originalName;
 
-	               File newFile = new File(newCompanyFilePath);
-	               if (!newFile.exists()) {
-	                   newFile.createNewFile();
-	               }
-	               BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(newFile));
-	               out.write(file.getBytes());
-	               out.flush();
-	               out.close();
-	           } catch (FileNotFoundException e) {
-	               e.printStackTrace();
-	           } catch (IOException e) {
-	               e.printStackTrace();
-	           }
-	       }
-	       
-	       String filePath = "http://localhost:8081/homework/file/" + fileName;
-	       jsonResult.setData(filePath);
-	       jsonResult.setMessage("success");
-	       return jsonResult;
-	   }
+                File newFile = new File(newCompanyImagePath);
+                if (!newFile.exists()) {
+                    newFile.createNewFile();
+                }
+                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(newFile));
+                out.write(file.getBytes());
+                out.flush();
+                out.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return "图片上传失败！";
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "图片上传失败！";
+            }
+        }
+        String filePath = "http://localhost:8081/" + originalName;
+        return filePath;
+    }
 	
-	
+	/**
+	 * 提交作业
+	 * @param submitHomeworkDTO
+	 * @return
+	 */
 	@RequestMapping(value = "/submitHomework",method = RequestMethod.POST)
 	@ApiOperation(value = "提交作业",notes = "提交作业")
 	public JSONResult submitHomework(@RequestBody SubmitHomeworkDTO submitHomeworkDTO) {
@@ -80,5 +87,43 @@ public class GradeController {
 			jsonResult.setMessage("false");
 		}
 		return jsonResult;
+	}
+	
+	/**
+	 * 获取提交的作业地址,留言
+	 * @param getFileDTO
+	 * @return
+	 */
+	@RequestMapping(value = "/getFileAddress",method = RequestMethod.POST)
+	@ApiOperation(value = "获取提交的作业地址",notes = "获取提交的作业地址")
+	public GetSubmitInfo getFileAddress(@RequestBody GetFileDTO getFileDTO) {
+		GetSubmitInfo getSubmitInfo = gradeService.getFileAddress(getFileDTO);
+		return getSubmitInfo;
+	}
+	/**
+	 * 获取已交作业学生信息
+	 * @param homeworkId
+	 * @return
+	 */
+	@RequestMapping(value = "/getSubmitHomework",method = RequestMethod.GET)
+	@ApiOperation(value = "获取已交作业学生信息",notes = "获取已交作业学生信息")
+	public JSONResult getSubmitHomework(@RequestParam("homeworkId")String homeworkId) {
+		JSONResult jsonResult = new JSONResult<>();
+		List<SubmittedDTO> submittedDTO = gradeService.getSubmitHomework(homeworkId);
+		jsonResult.setData(submittedDTO);
+		jsonResult.setTotalCount(submittedDTO.size());
+		return jsonResult;
+	}
+	
+	@RequestMapping(value = "/addScore",method = RequestMethod.POST)
+	@ApiOperation(value = "记录成绩",notes = "记录成绩")
+	public String addScore(@RequestBody AddScoreDTO addScoreDTO) {
+		boolean success = gradeService.addScore(addScoreDTO);
+		if(success) {
+			return "success";
+		}
+		else {
+			return "false";
+		}
 	}
 }

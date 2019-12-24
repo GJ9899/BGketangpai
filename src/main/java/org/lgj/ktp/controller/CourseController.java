@@ -142,7 +142,11 @@ public class CourseController {
 		jsonResult.setData(courseLsList);
 		return jsonResult;
 	}
-	
+	/**
+	 * 获取课程成员
+	 * @param courseId
+	 * @return
+	 */
 	@RequestMapping(value = "/getCourseMember",method = RequestMethod.GET)
 	@ApiOperation(value = "获取课程成员",notes = "获取课程成员")
 	public List<String> getCourseMember(@RequestParam("courseId")String courseId){
