@@ -5,6 +5,7 @@ import java.util.List;
 import org.lgj.ktp.dto.AddScoreDTO;
 import org.lgj.ktp.dto.GetFileDTO;
 import org.lgj.ktp.dto.GetSubmitInfo;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.dto.SubmitHomeworkDTO;
 import org.lgj.ktp.dto.SubmittedDTO;
 
@@ -20,4 +21,11 @@ public interface GradeService {
 	
 	//记录成绩
 	boolean addScore(AddScoreDTO addScoreDTO);
+	
+	//获取未批改作业数量
+	int getUncheckCount(SearchHomeworkDTO searchHomeworkDTO);
+	
+	
+	//获取已批改作业数量
+	int getCheckedCount(SearchHomeworkDTO searchHomeworkDTO);
 }

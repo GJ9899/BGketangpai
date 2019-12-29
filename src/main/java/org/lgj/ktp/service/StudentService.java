@@ -22,4 +22,10 @@ public interface StudentService {
 	List<String> getStudentName(String courseId);
 	
 	List<String> getTeacherName(String courseId);
+	
+	//判断密码是否正确
+	String checkPassword(String userId,String password);
+	
+	//删除课程
+	boolean deleteCourse(String userId,String courseId);
 }

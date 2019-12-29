@@ -57,6 +57,38 @@
       (select * from teacher where phone_mail = #{phoneMail,jdbcType=VARCHAR});
   </insert>
   
+  <!-- 删除作业 -->
+  <delete id="deleteHomework" parameterType="java.lang.String">
+    delete from homework
+    where id = #{homeworkId,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 删除课程作业 -->
+  <delete id="deleteworkByCourseId" parameterType="java.lang.String">
+    delete from homework
+    where publish_course_object = #{courseId,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 删除选课表 -->
+  <delete id="deleteSelectCourse" parameterType="java.lang.String">
+    delete from selection_course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 验证密码 -->
+  <select id="checkPassword" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+    name
+    from teacher
+    where id = #{userId,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 删除课程 -->
+  <delete id="deleteCourse" parameterType="java.lang.String">
+    delete from course
+    where id = #{courseId,jdbcType=VARCHAR}
+  </delete>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

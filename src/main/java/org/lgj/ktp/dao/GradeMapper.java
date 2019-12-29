@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.lgj.ktp.dto.AddScoreDTO;
 import org.lgj.ktp.dto.GetFileDTO;
 import org.lgj.ktp.dto.GetSubmitInfo;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.dto.SubmitHomeworkDTO;
 import org.lgj.ktp.dto.SubmittedDTO;
 import org.lgj.ktp.entity.Grade;
@@ -36,4 +37,11 @@ public interface GradeMapper {
   	
   	//记录成绩
   	int addScore(AddScoreDTO addScoreDTO);
+  	
+  //获取未批改作业数量
+  	int getUncheckCount(SearchHomeworkDTO searchHomeworkDTO);
+  	
+  	
+  	//获取已批改作业数量
+  	int getCheckedCount(SearchHomeworkDTO searchHomeworkDTO);
 }

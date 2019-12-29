@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.lgj.ktp.dto.DeleteCourseDTO;
 import org.lgj.ktp.dto.LoginInfo;
 import org.lgj.ktp.dto.TeacherInfoDTO;
 import org.lgj.ktp.entity.Teacher;
@@ -39,7 +40,6 @@ public class TeacherController {
 	@ApiOperation(value = "注册",notes = "注册")
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	public JSONResult regisster(@RequestBody Teacher teacher) {
-		System.out.println("121212");
 		JSONResult jsonResult = new JSONResult();
 		teacher.setId(UUID.randomUUID().toString().replace("-", ""));
 		boolean success = teacherService.register(teacher);
@@ -93,5 +93,42 @@ public class TeacherController {
 	public List<String> getTeacherName(@RequestParam("studentId")String studentId){
 		List<String> teacherName = teacherService.getTeacherName(studentId);
 		return teacherName;
+	}
+	
+	@RequestMapping(value = "/deleteHomework",method = RequestMethod.POST)
+	@ApiOperation(value = "删除作业",notes = "删除作业")
+	public String deleteHomework(@RequestParam("homeworkId")String homeworkId) {
+		boolean success = teacherService.deleteHomework(homeworkId);
+		if(success) {
+			return "success";
+		}
+		else {
+			return "false";
+		}
+	}
+	
+	
+	@RequestMapping(value = "/deleteCourse",method = RequestMethod.POST)
+	@ApiOperation(value = "删除作业",notes = "删除作业")
+	public String deleteCourse(@RequestBody DeleteCourseDTO deleteCourseDTO) {
+		String name = teacherService.checkPassword(deleteCourseDTO.getUserId(),deleteCourseDTO.getPassword());
+		if(name != null) {
+			//删除课程作业
+			boolean success1 = teacherService.deleteworkByCourseId(deleteCourseDTO.getCourseId());
+			//删除选课表信息
+			boolean success2 = teacherService.deleteSelectCourse(deleteCourseDTO.getCourseId());
+			//删除课程
+			boolean success = teacherService.deleteCourse(deleteCourseDTO.getCourseId());
+			if(success && success1 && success2) {
+				return "success";
+			}
+			else {
+				return "false";
+			}
+		}
+		else {
+			return "密码错误";
+		}
+		
 	}
 }

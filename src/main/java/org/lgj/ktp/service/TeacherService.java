@@ -24,4 +24,18 @@ public interface TeacherService {
 	
 	//获取教师姓名
 	List<String> getTeacherName(String studentId);
+	
+	//删除作业
+	boolean deleteHomework(String homeworkId);
+	
+	//删除课程
+	boolean deleteCourse(String courseId);
+	
+	String checkPassword(String userId,String password);
+	
+	//删除作业
+	boolean deleteworkByCourseId(String courseId);
+	
+	//删除选课表信息
+	boolean deleteSelectCourse(String courseId);
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.lgj.ktp.dto.DeleteCourseDTO;
 import org.lgj.ktp.dto.LoginInfo;
 import org.lgj.ktp.dto.StudentListDTO;
 import org.lgj.ktp.entity.Student;
@@ -102,6 +103,29 @@ public class StudentController {
 		List<String> teacherName = studentService.getTeacherName(courseId);
 		stuName.addAll(teacherName);
 		return stuName;
+	}
+	
+	
+	@RequestMapping(value = "/deleteCourse",method = RequestMethod.POST)
+	@ApiOperation(value = "退课",notes = "退课")
+	public JSONResult deleteCourse(@RequestBody DeleteCourseDTO deleteCourseDTO) {
+		JSONResult jsonResult = new JSONResult<>();
+		//判断密码是否正确
+		String name = studentService.checkPassword(deleteCourseDTO.getUserId(),deleteCourseDTO.getPassword());
+		if(name != null) {
+			//删除课程
+			boolean success = studentService.deleteCourse(deleteCourseDTO.getUserId(), deleteCourseDTO.getCourseId());
+			if(success) {
+				jsonResult.setMessage("success");
+			}
+			else {
+				jsonResult.setMessage("false");
+			}
+		}
+		else {
+			jsonResult.setMessage("密码错误");
+		}
+		return jsonResult;
 	}
 	
 }

@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.lgj.ktp.dto.AddScoreDTO;
 import org.lgj.ktp.dto.GetFileDTO;
 import org.lgj.ktp.dto.GetSubmitInfo;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.dto.SubmitHomeworkDTO;
 import org.lgj.ktp.dto.SubmittedDTO;
 import org.lgj.ktp.service.GradeService;
@@ -118,6 +121,10 @@ public class GradeController {
 	@RequestMapping(value = "/addScore",method = RequestMethod.POST)
 	@ApiOperation(value = "记录成绩",notes = "记录成绩")
 	public String addScore(@RequestBody AddScoreDTO addScoreDTO) {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = format.format(date);
+		addScoreDTO.setTime(time);
 		boolean success = gradeService.addScore(addScoreDTO);
 		if(success) {
 			return "success";
@@ -126,4 +133,22 @@ public class GradeController {
 			return "false";
 		}
 	}
+	
+	@RequestMapping(value = "/getUncheckCount",method = RequestMethod.POST)
+	@ApiOperation(value = "获取未批改作业数量",notes = "获取未批改作业数量")
+	public int getUncheckCount(@RequestBody SearchHomeworkDTO searchHomeworkDTO) {
+		return gradeService.getUncheckCount(searchHomeworkDTO);
+	}
+	
+	@RequestMapping(value = "/getCheckedCount",method = RequestMethod.POST)
+	@ApiOperation(value = "获取已批改作业数量",notes = "获取未批改作业数量")
+	public int getCheckedCount(@RequestBody SearchHomeworkDTO searchHomeworkDTO) {
+		return gradeService.getCheckedCount(searchHomeworkDTO);
+	}
+	
+//	@RequestMapping(value = "getUncheckCount",method = RequestMethod.GET)
+//	@ApiOperation(value = "获取未批改作业数量",notes = "获取未批改作业数量")
+//	public int getUncheckCount(@RequestParam("userId")String userId) {
+//		return gradeService.getUncheckCount(userId);
+//	}
 }

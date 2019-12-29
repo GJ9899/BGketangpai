@@ -41,4 +41,14 @@ public class StudentServiceImpl implements StudentService{
 		return studentMapper.getTeacherName(courseId);
 	}
 
+	@Override
+	public String checkPassword(String userId, String password) {
+		return studentMapper.checkPassword(userId,password);
+	}
+
+	@Override
+	public boolean deleteCourse(String userId, String courseId) {
+		return studentMapper.deleteCourse(userId,courseId) > 0;
+	}
+
 }

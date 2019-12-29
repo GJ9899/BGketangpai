@@ -38,6 +38,21 @@
 		where homework_id = #{homeworkId,jdbcType=VARCHAR}
   </select>
   
+  <!-- 获取未批改作业数量 -->
+  <select id="getUncheckCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) from grade 
+        where homework_id in 
+        (select id from homework where publish_course_object = #{courseId,jdbcType=VARCHAR}) 
+        and student_id = #{userId,jdbcType=VARCHAR} and score is null
+  </select>
+  
+  <!-- 获取已批改作业数量 -->
+  <select id="getCheckedCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) from grade 
+		where homework_id in 
+		(select id from homework where publish_course_object = #{courseId,jdbcType=VARCHAR}) 
+		and student_id = #{userId,jdbcType=VARCHAR} and score is not null
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from grade
     where id = #{id,jdbcType=VARCHAR}
@@ -61,7 +76,7 @@
   
   <!-- 记录成绩 -->
   <insert id="addScore" parameterType="org.lgj.ktp.dto.AddScoreDTO">
-    update grade set score = #{score,jdbcType=VARCHAR} where id = #{gradeId,jdbcType=VARCHAR}
+    update grade set score = #{score,jdbcType=VARCHAR},grading_time = #{time,jdbcType=VARCHAR} where id = #{gradeId,jdbcType=VARCHAR}
   </insert>
   
   <insert id="insertSelective" parameterType="org.lgj.ktp.entity.Grade">

@@ -6,11 +6,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.lgj.ktp.dto.GetAllHomeworkDTO;
 import org.lgj.ktp.dto.HomeworkInfoDTO;
 import org.lgj.ktp.dto.HomeworkNameDTO;
 import org.lgj.ktp.dto.HomeworkSubInfo;
+import org.lgj.ktp.dto.InformationDTO;
+import org.lgj.ktp.dto.IsSubmitDTO;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.entity.Homework;
 import org.lgj.ktp.service.HomeworkService;
+import org.lgj.ktp.service.InformationService;
 import org.lgj.ktp.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +36,9 @@ public class HomeworkController {
 	@Autowired
 	private HomeworkService homeworkService;
 	
+	@Autowired
+	private InformationService informationService;
+	
 	/**
 	 * 添加作业
 	 * @param homework
@@ -46,6 +54,12 @@ public class HomeworkController {
 		
 		homework.setPublishTime(format.format(date));
 		boolean success = homeworkService.addHomework(homework);
+		InformationDTO informationDTO = new InformationDTO();
+		informationDTO.setCourseName(informationService.getHomeworkName(homework.getPublishCourseObject()));
+		informationDTO.setHomeworkName(homework.getHomeworkName());
+		informationDTO.setId(UUID.randomUUID().toString().replace("-", ""));
+		informationDTO.setPublishTime(homework.getPublishTime());
+		boolean succ = informationService.addInformation(informationDTO);
 		if(success) {
 			jsonResult.setMessage("success");
 		}
@@ -105,8 +119,57 @@ public class HomeworkController {
 	@RequestMapping(value = "/getSubHomeworkbyId",method = RequestMethod.GET)
 	@ApiOperation(value = "获取提交作业页面所需作业信息",notes = "获取提交作业页面所需作业信息")
 	public HomeworkSubInfo getHomeworkbyId(@RequestParam("homeworkId")String homeworkId) {
-		System.out.println(homeworkId);
 		HomeworkSubInfo homeworkSubInfo = homeworkService.getSubHomeworkbyId(homeworkId);
 		return homeworkSubInfo;
 	}
+	
+	/**
+	 * 查看作业是否提交
+	 * @param isSubmitDTO
+	 * @return
+	 */
+	@RequestMapping(value = "/isSubmitHomework",method = RequestMethod.POST)
+	@ApiOperation(notes = "查看作业是否提交",value = "查看作业是否提交")
+	public String isSubmitHomework(@RequestBody IsSubmitDTO isSubmitDTO) {
+		String id = homeworkService.isSubmitHomework(isSubmitDTO);
+		if(id != null) {
+			return id;
+		}
+		else {
+			return "false";
+		}
+	}
+	
+	/**
+	 * 获取已交作业人数
+	 * @param homeworkId
+	 * @return
+	 */
+	@RequestMapping(value = "/getSubmitCount",method = RequestMethod.GET)
+	@ApiOperation(value = "获取已交作业人数",notes = "获取已交作业人数")
+	public int getSubmitCount(@RequestParam("homeworkId")String homeworkId) {
+		return homeworkService.getSubmitCount(homeworkId);
+	}
+	
+	/**
+	 * 获取未批改作业人数
+	 * @param homeworkId
+	 * @return
+	 */
+	@RequestMapping(value = "/getUncheckCount",method = RequestMethod.GET)
+	@ApiOperation(value = "获取未批改作业人数",notes = "获取未批改作业人数")
+	public int getUncheckCount(@RequestParam("homeworkId")String homeworkId) {
+		return homeworkService.getUncheckCount(homeworkId);
+	}
+	
+	@RequestMapping(value = "/getAllHomework",method = RequestMethod.POST)
+	@ApiOperation(value = "获取所有作业",notes = "获取所有作业")
+	public List<GetAllHomeworkDTO> getAllHomework(@RequestBody SearchHomeworkDTO searchHomeworkDTO){
+		List<GetAllHomeworkDTO> list = homeworkService.getAllHomework(searchHomeworkDTO);
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setScore(homeworkService.getScore(list.get(i).getId(),searchHomeworkDTO.getUserId()));
+		}
+		return list;
+	}
+	
 }

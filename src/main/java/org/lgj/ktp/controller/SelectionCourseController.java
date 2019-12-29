@@ -41,7 +41,6 @@ public class SelectionCourseController {
 		//检查这个人是否选择过这门课程
 		//1.根据加课码得到课程id
 		String courseId = selectionCourseService.getCourseIdByAddCode(selectionCourseDTO.getAddCode());
-		System.out.println("courseId:" + courseId);
 		boolean success = false;
 		//课程存在
 		if(courseId != null) {
@@ -51,7 +50,6 @@ public class SelectionCourseController {
 			selectionCourse.setSelecterId(selectionCourseDTO.getSelecterId());
 			selectionCourse.setId(UUID.randomUUID().toString().replace("-", ""));
 			success = selectionCourseService.selectCourse(selectionCourse);
-			System.out.println("success" + success);
 			//3.返回信息
 			if(success) {
 				jsonResult.setMessage("success");

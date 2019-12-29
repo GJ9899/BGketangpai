@@ -4,6 +4,18 @@ public class AddScoreDTO {
 	private String gradeId;
 	
 	private String score;
+	
+	private String time;
+	
+	
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
 
 	public String getGradeId() {
 		return gradeId;

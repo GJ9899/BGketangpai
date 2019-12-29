@@ -8,6 +8,7 @@ import org.lgj.ktp.dto.StudentListDTO;
 import org.lgj.ktp.dto.TeacherInfoDTO;
 import org.lgj.ktp.entity.Teacher;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Mapper
 @Repository
@@ -37,4 +38,19 @@ public interface TeacherMapper {
     
     //获取教师姓名
     List<String> getTeacherName(@Param("studentId")String studentId);
+    
+    //删除作业
+    int deleteHomework(@RequestParam("homeworkId")String homeworkId);
+    
+    String checkPassword(@Param("userId")String userId,@Param("password")String password);
+    
+    //删除课程
+    int deleteCourse(@Param("courseId")String courseId);
+    
+    //删除课程作业
+    int deleteworkByCourseId(@Param("courseId")String courseId);
+    
+    //删除选课表
+    int deleteSelectCourse(@Param("courseId")String courseId);
+    
 }

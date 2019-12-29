@@ -6,6 +6,7 @@ import org.lgj.ktp.dao.GradeMapper;
 import org.lgj.ktp.dto.AddScoreDTO;
 import org.lgj.ktp.dto.GetFileDTO;
 import org.lgj.ktp.dto.GetSubmitInfo;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.dto.SubmitHomeworkDTO;
 import org.lgj.ktp.dto.SubmittedDTO;
 import org.lgj.ktp.service.GradeService;
@@ -36,6 +37,16 @@ public class GradeServiceImpl implements GradeService{
 	@Override
 	public boolean addScore(AddScoreDTO addScoreDTO) {
 		return gradeMapper.addScore(addScoreDTO) > 0;
+	}
+
+	@Override
+	public int getUncheckCount(SearchHomeworkDTO searchHomeworkDTO) {
+		return gradeMapper.getUncheckCount(searchHomeworkDTO);
+	}
+
+	@Override
+	public int getCheckedCount(SearchHomeworkDTO searchHomeworkDTO) {
+		return gradeMapper.getCheckedCount(searchHomeworkDTO);
 	}
 
 }

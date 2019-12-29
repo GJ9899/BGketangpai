@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lgj.ktp.dao.InformationMapper">
+	<resultMap id="BaseResultMap"
+		type="org.lgj.ktp.entity.Information">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="course_name" jdbcType="VARCHAR"
+			property="courseName" />
+		<result column="homework_name" jdbcType="VARCHAR"
+			property="homeworkName" />
+		<result column="publish_time" jdbcType="VARCHAR"
+			property="publishTime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, course_id, homework_name, publish_time
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from information
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 获取信息 -->
+	<select id="getInformation" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		information.course_name,information.homework_name,information.publish_time
+		from information
+		left join course on information.course_name =
+		course.course_name
+		left join selection_course on course.id =
+		selection_course.course_id
+		where selection_course.selecter_id =
+		#{userId,jdbcType=VARCHAR}
+		order by publish_time desc
+	</select>
+
+	<!-- 获取课程名称 -->
+	<select id="getHomeworkName" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select
+		course_name
+		from course
+		where id = #{courseId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from information
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="org.lgj.ktp.entity.Information">
+		insert into information (id, course_id, homework_name,
+		publish_time, student_id)
+		values (#{id,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR},
+		#{homeworkName,jdbcType=VARCHAR},
+		#{publishTime,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 添加消息 -->
+	<insert id="addInformation"
+		parameterType="org.lgj.ktp.dto.InformationDTO">
+		insert into information (id, course_name, homework_name,
+		publish_time)
+		values (#{id,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR},
+		#{homeworkName,jdbcType=VARCHAR},
+		#{publishTime,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective"
+		parameterType="org.lgj.ktp.entity.Information">
+		insert into information
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="homeworkName != null">
+				homework_name,
+			</if>
+			<if test="publishTime != null">
+				publish_time,
+			</if>
+			<if test="studentId != null">
+				student_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=VARCHAR},
+			</if>
+			<if test="homeworkName != null">
+				#{homeworkName,jdbcType=VARCHAR},
+			</if>
+			<if test="publishTime != null">
+				#{publishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="studentId != null">
+				#{studentId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="org.lgj.ktp.entity.Information">
+		update information
+		<set>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=VARCHAR},
+			</if>
+			<if test="homeworkName != null">
+				homework_name = #{homeworkName,jdbcType=VARCHAR},
+			</if>
+			<if test="publishTime != null">
+				publish_time = #{publishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="studentId != null">
+				student_id = #{studentId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="org.lgj.ktp.entity.Information">
+		update information
+		set course_id = #{courseId,jdbcType=VARCHAR},
+		homework_name = #{homeworkName,jdbcType=VARCHAR},
+		publish_time = #{publishTime,jdbcType=VARCHAR},
+		student_id = #{studentId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

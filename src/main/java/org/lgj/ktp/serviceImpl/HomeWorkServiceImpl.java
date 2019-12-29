@@ -3,9 +3,12 @@ package org.lgj.ktp.serviceImpl;
 import java.util.List;
 
 import org.lgj.ktp.dao.HomeworkMapper;
+import org.lgj.ktp.dto.GetAllHomeworkDTO;
 import org.lgj.ktp.dto.HomeworkInfoDTO;
 import org.lgj.ktp.dto.HomeworkNameDTO;
 import org.lgj.ktp.dto.HomeworkSubInfo;
+import org.lgj.ktp.dto.IsSubmitDTO;
+import org.lgj.ktp.dto.SearchHomeworkDTO;
 import org.lgj.ktp.entity.Homework;
 import org.lgj.ktp.service.HomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,31 @@ public class HomeWorkServiceImpl implements HomeworkService{
 	@Override
 	public HomeworkSubInfo getSubHomeworkbyId(String homeworkId) {
 		return homeworkMapper.getSubHomeworkbyId(homeworkId);
+	}
+
+	@Override
+	public String isSubmitHomework(IsSubmitDTO isSubmitDTO) {
+		return homeworkMapper.isSubmitHomework(isSubmitDTO.getHomeworkId(),isSubmitDTO.getUserId());
+	}
+
+	@Override
+	public int getSubmitCount(String homeworkId) {
+		return homeworkMapper.getSubmitCount(homeworkId);
+	}
+
+	@Override
+	public int getUncheckCount(String homeworkId) {
+		return homeworkMapper.getUncheckCount(homeworkId);
+	}
+
+	@Override
+	public List<GetAllHomeworkDTO> getAllHomework(SearchHomeworkDTO searchHomeworkDTO) {
+		return homeworkMapper.getAllHomework(searchHomeworkDTO);
+	}
+
+	@Override
+	public String getScore(String homeworkId,String studentId) {
+		return homeworkMapper.getScore(homeworkId,studentId);
 	}
 
 }

@@ -36,4 +36,8 @@ public interface StudentMapper {
     List<String> getStudentName(@Param("courseId")String courseId);
     
     List<String> getTeacherName(@Param("courseId")String courseId);
+    
+    String checkPassword(@Param("userId")String userId,@Param("password")String passeord);
+    
+    int deleteCourse(@Param("userId")String userId,@Param("courseId")String courseId);
 }

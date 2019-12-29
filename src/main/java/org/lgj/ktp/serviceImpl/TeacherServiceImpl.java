@@ -42,4 +42,29 @@ public class TeacherServiceImpl implements TeacherService{
 	public List<String> getTeacherName(String studentId) {
 		return teacherMapper.getTeacherName(studentId);
 	}
+
+	@Override
+	public boolean deleteHomework(String homeworkId) {
+		return teacherMapper.deleteHomework(homeworkId) > 0;
+	}
+
+	@Override
+	public String checkPassword(String userId, String password) {
+		return teacherMapper.checkPassword(userId,password);
+	}
+
+	@Override
+	public boolean deleteCourse(String courseId) {
+		return teacherMapper.deleteCourse(courseId) > 0;
+	}
+
+	@Override
+	public boolean deleteworkByCourseId(String courseId) {
+		return teacherMapper.deleteworkByCourseId(courseId) > 0;
+	}
+
+	@Override
+	public boolean deleteSelectCourse(String courseId) {
+		return teacherMapper.deleteSelectCourse(courseId) >0;
+	}
 }

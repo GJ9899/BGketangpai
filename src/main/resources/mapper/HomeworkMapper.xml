@@ -72,6 +72,39 @@
   </select>
   
   
+  <!-- 查看作业是否提交 -->
+  <select id="isSubmitHomework" parameterType="java.lang.String" resultType="java.lang.String">
+  SELECT homework_id from grade 
+  where homework_id =  #{homeworkId,jdbcType=VARCHAR} and student_id =  #{userId,jdbcType=VARCHAR}
+  
+  </select>
+  
+  
+  <!-- //获取已交作业人数 -->
+  <select id="getSubmitCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  select count(*) from grade where homework_id = #{homeworkId,jdbcType=VARCHAR}
+  
+  </select>
+  
+  <!-- //获取未批改作业人数 -->
+  <select id="getUncheckCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  select count(*) from grade where homework_id = #{homeworkId,jdbcType=VARCHAR} and score is null
+  
+  </select>
+  
+  <!-- 获取所有作业 -->
+  <select id="getAllHomework" parameterType="java.lang.String" resultType="org.lgj.ktp.dto.GetAllHomeworkDTO">
+    select homework.id,homework.publish_time,homework.homework_name,homework.best_score
+		from homework
+		 where homework.publish_course_object = #{courseId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getScore" parameterType="java.lang.String" resultType="java.lang.String">
+    select score from grade where homework_id = #{homeworkId,jdbcType=VARCHAR} and student_id = #{studentId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from homework
     where id = #{id,jdbcType=VARCHAR}

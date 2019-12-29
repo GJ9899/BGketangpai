@@ -45,6 +45,20 @@
     where course_id = #{courseId,jdbcType=VARCHAR}
   </select>
   
+  <!-- 判断密码是否正确 -->
+  <select id="checkPassword" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+       name
+    from student 
+    where id = #{userId,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 删除课程 -->
+  <delete id="deleteCourse" parameterType="java.lang.String">
+    delete from selection_course
+    where course_id = #{courseId,jdbcType=VARCHAR} and selecter_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  
   <!-- 注册 -->
   <insert id="register" parameterType="org.lgj.ktp.entity.Student">
     insert into student (id, phone_mail, password,school,
